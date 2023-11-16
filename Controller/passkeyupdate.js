@@ -1,4 +1,4 @@
-import bcrypt from "bcrypt";
+import crypto from "crypto";
 import TodoCollection from "../Model/TodoModel.js";
 
 const passkeyupdate = async (req, res) => {
@@ -9,12 +9,11 @@ const passkeyupdate = async (req, res) => {
     let password = childId.querystring.password;
     let itemId = childId.querystring.keyid;
 
-    // Generate a salt for hashing
-    const saltRounds = 10;
-    const salt = await bcrypt.genSalt(saltRounds);
-
-    // Hash the passKey with the salt
-    const hashedPassKey = await bcrypt.hash(password, salt);
+    // Hash the passKey using the crypto module
+    const hashedPassKey = crypto
+      .createHash("sha256") // You can choose a different algorithm if needed
+      .update(password)
+      .digest("hex");
 
     // Update the user document with the hashed passKey
     const data = await TodoCollection.findByIdAndUpdate(
@@ -26,7 +25,7 @@ const passkeyupdate = async (req, res) => {
     if (data) {
       return res.status(201).json({
         statusCode: 201,
-        message: "Genrate SuccessFully",
+        message: "Generate Successfully",
         data: data,
       });
     } else {

@@ -1,6 +1,6 @@
 import User from "../Model/userModel.js";
 import TodoCollection from "../Model/TodoModel.js";
-import bcrypt from "bcrypt";
+import crypto from "crypto";
 
 const UnlockFully = async (req, res) => {
   try {
@@ -20,11 +20,14 @@ const UnlockFully = async (req, res) => {
 
     const storedPassKeyHash = userData.PassKeyGen;
 
-    // Compare the provided password with the stored hash
-    const isPasswordValid = await bcrypt.compare(
-      providedPassKey,
-      storedPassKeyHash
-    );
+    // Hash the provided password using the crypto module
+    const providedPassKeyHash = crypto
+      .createHash("sha256") // You can choose a different algorithm if needed
+      .update(providedPassKey)
+      .digest("hex");
+
+    // Compare the hashed provided password with the stored hash
+    const isPasswordValid = storedPassKeyHash === providedPassKeyHash;
 
     if (isPasswordValid) {
       let user = await TodoCollection.findOneAndUpdate(
