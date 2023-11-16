@@ -19,6 +19,7 @@ const filterAndSearch = async (req, res) => {
     if (rowId) {
       // If 'rowId' is provided, filter by 'rowId'
       filter._id = rowId;
+      let rows = await TodoCollection.find(rowId);
 
       await NotificationCollection.updateOne(
         { _id: notificationId }, // Assuming the field is 'rowid', adjust this based on your schema
