@@ -46,6 +46,6 @@ app.use(express.static("public"));
 import registerRoute from "./Routes/userRouts.js";
 app.use("/api/todo", registerRoute);
 
-app.listen(PORT, () => {
-  console.log(`Server is listening on port ${PORT}`);
+app.listen(process.env.PORT, () => {
+  console.log(`Server is listening on port ${process.env.PORT}`);
 });
