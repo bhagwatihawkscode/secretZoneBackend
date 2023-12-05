@@ -17,12 +17,15 @@ const AuthVerify = async (req, res, next) => {
     // Find the user with the given ID
     const user = await User.findById(decodedToken.id);
 
-    // If the user is not found, return an error
-    if (!user) {
-      return res
-        .status(404)
-        .json({ success: false, message: "User not found" });
+    if (!user || user.token !== tokenHalf) {
+      return res.status(401).json({ success: false, message: "Unauthorized" });
     }
+    // If the user is not found, return an error
+    // if (!user) {
+    //   return res
+    //     .status(404)
+    //     .json({ success: false, message: "User not found" });
+    // }
 
     // Attach the user object to the request object
     global.user_id = user._id;

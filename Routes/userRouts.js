@@ -1,6 +1,7 @@
 import express from "express";
 import { Router } from "express";
 import dotenv from "dotenv";
+import multer from "multer";
 
 dotenv.config();
 
@@ -27,6 +28,26 @@ import shownotifiction from "../Controller/notificationShow.js";
 import shownotifictiondata from "../Controller/checkforNotification.js";
 import ClearNotification from "../Controller/ClearNotificationController.js";
 import openEditModal from "../Controller/checkforEditModalOpen.js";
+import sendmail from "../Controller/mailsendcontroller.js";
+import whatsappshare from "../Controller/whatsappsendcontroller.js";
+import FileData from "../Controller/fileController.js";
+import FileFilter from "../Controller/FileShow.js";
+import fileDeleteUser from "../Controller/FileDelete.js";
+import filepassGenrate from "../Controller/filepassGenrate.js";
+import Filepassverify from "../Controller/FilePassverify.js";
+import FileLockRemove from "../Controller/FileRemoveLock.js";
+import PrivcyOkOrNot from "../Controller/FileCheckPrivcy.js";
+import DownloadZip from "../Controller/FileDownload.js";
+import MailShareZip from "../Controller/FileEmailShare.js";
+import WhatsappShareZip from "../Controller/FileWhatsappShare.js";
+import FileEditData from "../Controller/FileEDITShow.js";
+import FileUpdateData from "../Controller/FileEditController.js";
+import WeekData from "../Controller/WeekDaysCount.js";
+import ClockModalData from "../Controller/ClockModalApi.js";
+import genratelinks from "../Controller/shareingpermission/SharePermissionLink.js";
+import senddatawithPermission from "../Controller/shareingpermission/FilterGiveRow.js";
+import getAllUser from "../Controller/shareingpermission/getAllUsers.js";
+
 const app = Router();
 
 app.post("/register", register);
@@ -51,4 +72,25 @@ app.post("/ShowNotification", AuthVerifys, shownotifiction);
 app.post("/CheckDays", AuthVerifys, shownotifictiondata);
 app.post("/ClearNotification", AuthVerifys, ClearNotification);
 app.post("/openEditModal", AuthVerifys, openEditModal);
+app.post("/mailsend", AuthVerifys, sendmail);
+app.post("/whatsappsend", AuthVerifys, whatsappshare);
+app.post("/FileData", AuthVerifys, FileData);
+app.post("/FileFilter", AuthVerifys, FileFilter);
+app.post("/deleteuserfiles", AuthVerifys, fileDeleteUser);
+app.post("/generatepassword", AuthVerifys, filepassGenrate);
+app.post("/passwordverification", AuthVerifys, Filepassverify);
+app.post("/removeLock", AuthVerifys, FileLockRemove);
+app.post("/privacyokornot", AuthVerifys, PrivcyOkOrNot);
+app.post("/downloadzip", DownloadZip);
+app.post("/Emailsendzip", AuthVerifys, MailShareZip);
+app.post("/Whatsappsendzip", AuthVerifys, WhatsappShareZip);
+app.post("/editmodalshow", AuthVerifys, FileEditData);
+app.post("/Fileupdatedata", AuthVerifys, FileUpdateData);
+app.post("/weekdayscount", AuthVerifys, WeekData);
+app.post("/clockmodaldatasend", AuthVerifys, ClockModalData);
+
+app.post("/generatelink", AuthVerifys, genratelinks);
+app.post("/sendrowdata/:id", AuthVerifys, senddatawithPermission);
+app.post("/alluserslist", AuthVerifys, getAllUser);
+
 export default app;

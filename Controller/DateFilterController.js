@@ -15,14 +15,13 @@ const filterAndSearch = async (req, res) => {
   let notificationId = user.notificationId;
 
   try {
-    const filter = { userID: userId }; // Always filter by userID
+    const filter = { userID: userId };              
     if (rowId) {
-      // If 'rowId' is provided, filter by 'rowId'
       filter._id = rowId;
-      let rows = await TodoCollection.find(rowId);
+      let rows = await TodoCollection.find({ _id: rowId });
 
       await NotificationCollection.updateOne(
-        { _id: notificationId }, // Assuming the field is 'rowid', adjust this based on your schema
+        { _id: notificationId },
         { $set: { updatestatus: "1" } }
       );
     }
@@ -51,7 +50,7 @@ const filterAndSearch = async (req, res) => {
       res.status(201).json({ message: "No Secrets Found", data });
     }
   } catch (error) {
-    console.error(error);
+    console.log(error);
     res.status(500).json({ message: "An error occurred while fetching data." });
   }
 };

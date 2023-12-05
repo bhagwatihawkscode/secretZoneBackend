@@ -7,6 +7,9 @@ const uploadFile = async (req, res) => {
   try {
     const userData = req.body;
     let file = userData.file;
+
+    
+    
     let imagePath = "";
 
     if (file && file.startsWith("data:image/")) {

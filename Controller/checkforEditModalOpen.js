@@ -3,7 +3,6 @@ import TodoCollection from "../Model/TodoModel.js";
 const openEditModal = async (req, res) => {
   try {
     let row = req.body.querystring;
-    console.log(row);
 
     const data = await TodoCollection.findOne({ _id: row, PrivcyOK: "true" });
 
@@ -11,7 +10,6 @@ const openEditModal = async (req, res) => {
       console.log("No data found for the given rowId");
       return res.status(200).json(true);
     } else {
-      console.log("nhi aaya");
       return res.status(200).json(false);
     }
   } catch (error) {
