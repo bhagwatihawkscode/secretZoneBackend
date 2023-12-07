@@ -43,7 +43,7 @@ app.use(
 
 app.use(express.static("public"));
 
-app.use(express.urlencoded({ extended: true }));
+// app.use(express.urlencoded({ extended: true }));
 
 import registerRoute from "./Routes/userRouts.js";
 app.use("/api/todo", registerRoute);
