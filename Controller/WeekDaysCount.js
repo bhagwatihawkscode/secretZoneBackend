@@ -1,4 +1,5 @@
 import TodoCollection from "../Model/TodoModel.js";
+import FileCollection from "../Model/FileModal.js";
 
 const WeekData = async (req, res) => {
   try {
@@ -38,11 +39,42 @@ const WeekData = async (req, res) => {
       (day) => result.find((entry) => entry._id === day)?.count || 0
     );
 
+    const Fileresult = await FileCollection.aggregate([
+      {
+        $match: {
+          userID: global.user_id,
+          createdAt: {
+            $gte: previousSunday,
+            $lte: currentSaturday,
+          },
+        },
+      },
+      {
+        $group: {
+          _id: { $dayOfWeek: { $add: ["$createdAt", 1] } }, // Adding 1 to match JavaScript's getDay()
+          count: { $sum: 1 },
+        },
+      },
+    ]);
+
+    // Create an array representing each day of the week
+
+    // Map the result to extract counts for each day
+    const formattedResultForFile = daysOfWeek.map(
+      (day) => Fileresult.find((entry) => entry._id === day)?.count || 0
+    );
+
     // console.log("Counts for each day:", formattedResult);
 
     // console.log("Query results:", result);
 
-    return res.status(200).json({ success: true, data: formattedResult });
+    return res
+      .status(200)
+      .json({
+        success: true,
+        data: formattedResult,
+        FileData: formattedResultForFile,
+      });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ success: false, message: "Error" });

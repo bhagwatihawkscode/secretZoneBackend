@@ -24,7 +24,7 @@ const MailShareZip = async (req, res) => {
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: "bhagwatilalmenariya.hawkscode@gmail.com",
+        user: "SecretZone.Team@gmail.com",
         pass: process.env.pass,
       },
     });

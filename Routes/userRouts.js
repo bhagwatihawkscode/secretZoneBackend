@@ -47,11 +47,20 @@ import ClockModalData from "../Controller/ClockModalApi.js";
 import genratelinks from "../Controller/shareingpermission/SharePermissionLink.js";
 import senddatawithPermission from "../Controller/shareingpermission/FilterGiveRow.js";
 import getAllUser from "../Controller/shareingpermission/getAllUsers.js";
+import LocationFilter from "../Controller/DashSerachByLocation.js";
+import {
+  forgotPassword,
+  resetPassword,
+} from "../Controller/ForgetPassControoler.js";
 
 const app = Router();
 
 app.post("/register", register);
 app.post("/login", logins);
+app.post("/forgot-password", forgotPassword);
+// app.post("/reset-password/:token", getResetPasswordForm);
+app.post("/reset-password/:token", resetPassword);
+
 app.post("/DataSend", AuthVerifys, DataSend);
 app.post("/update", AuthVerifys, uploadFile);
 app.post("/TodoData", AuthVerifys, TodoData);
@@ -92,5 +101,6 @@ app.post("/clockmodaldatasend", AuthVerifys, ClockModalData);
 app.post("/generatelink", AuthVerifys, genratelinks);
 app.post("/sendrowdata/:id", AuthVerifys, senddatawithPermission);
 app.post("/alluserslist", AuthVerifys, getAllUser);
+app.post("/LocationFilter", AuthVerifys, LocationFilter);
 
 export default app;

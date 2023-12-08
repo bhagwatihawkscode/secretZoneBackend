@@ -21,6 +21,8 @@ const UserSchema = mongoose.Schema({
   token: String,
   profileImage: String,
   PassKeyGen: String,
+  resetToken: String,
+  resetTokenUsedAt: Date,
 });
 
 // Method to set salt and hash the password for a user
@@ -42,6 +44,15 @@ UserSchema.methods.validPassword = function (password) {
     .pbkdf2Sync(password, this.PasswordSalt, 1000, 64, `sha512`)
     .toString(`hex`);
   return this.simplePassword === simplePassword;
+};
+
+UserSchema.methods.generateResetToken = function () {
+  this.resetToken = crypto.randomBytes(20).toString("hex");
+  this.resetTokenExpiresAt = Date.now() + 300000;
+};
+
+UserSchema.methods.isResetTokenUsed = function () {
+  return !!this.resetTokenUsedAt;
 };
 
 // Exporting module to allow it to be imported in other files
