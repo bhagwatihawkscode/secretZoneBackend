@@ -12,13 +12,13 @@ const DownloadZip = async (req, res) => {
     // Retrieve zip file information from the database
     const { zipFilePath, FileName } = await FileCollection.findById(fileId);
 
-    // Generate relative extraction directory path using import.meta.url
-    const currentFileUrl = import.meta.url;
-    const currentFilePath = url.fileURLToPath(currentFileUrl);
-    const extractPath = path.join(
-      path.dirname(currentFilePath),
-      "../extracted"
-    );
+    // Use the /tmp directory for extraction
+    const extractPath = "/tmp/extracted";
+
+    // Ensure the /tmp/extracted directory exists
+    if (!fs.existsSync(extractPath)) {
+      fs.mkdirSync(extractPath, { recursive: true });
+    }
 
     // Extract the contents of the ZIP file
     await extract(zipFilePath, { dir: extractPath });
