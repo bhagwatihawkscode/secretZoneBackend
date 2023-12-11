@@ -12,26 +12,26 @@ const DownloadZip = async (req, res) => {
     // Retrieve zip file information from the database
     const { zipFilePath, FileName } = await FileCollection.findById(fileId);
 
-    // Extract the contents of the ZIP file for debugging
+    // Generate relative extraction directory path using import.meta.url
     const currentFileUrl = import.meta.url;
     const currentFilePath = url.fileURLToPath(currentFileUrl);
-    const extractPath = path.resolve(
+    const extractPath = path.join(
       path.dirname(currentFilePath),
-      "extracted"
+      "../extracted"
     );
 
+    // Extract the contents of the ZIP file
     await extract(zipFilePath, { dir: extractPath });
-    console.log(FileName);
+
     // Send the zip file to the client
     res.setHeader("Content-Type", "application/zip");
     res.setHeader("Content-Disposition", `attachment; filename="${FileName}"`);
 
-    res.download(zipFilePath, (err) => {
+    res.download(zipFilePath, async (err) => {
       if (err) {
         console.error("Error during download:", err);
       } else {
-        // Optionally, you can remove the extracted files
-        fs.rmSync(extractPath, { recursive: true });
+        await cleanupExtractedFiles(extractPath);
       }
     });
   } catch (error) {
@@ -39,5 +39,13 @@ const DownloadZip = async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 };
+
+async function cleanupExtractedFiles(extractPath) {
+  try {
+    await fs.rmSync(extractPath, { recursive: true });
+  } catch (error) {
+    console.error("Error cleaning up extracted files:", error);
+  }
+}
 
 export default DownloadZip;
