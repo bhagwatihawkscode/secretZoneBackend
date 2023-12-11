@@ -55,6 +55,13 @@ import {
 
 const app = Router();
 
+app.get("/", (req, res) => {
+  // Define the message you want to show
+  const message = "Hello from our API!";
+
+  // Send the message as a response
+  res.send(message);
+});
 app.post("/register", register);
 app.post("/login", logins);
 app.post("/forgot-password", forgotPassword);
