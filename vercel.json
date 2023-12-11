@@ -14,16 +14,8 @@
         "src": "/(.*)",
         "dest": "/index.js"
       }
-    ],
-    "functions": {
-      "api/todo": {
-        "src": "index.js",
-        "handler": "/api/todo", 
-        "environment": {
-          "API_ROUTE": "/api/todo" 
-        }
-      }
-    }
+    ]
+   
  
   }
  
