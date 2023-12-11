@@ -1,29 +1,29 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "index.js", 
-      "use": "@vercel/node",
-      "env": {
-        "NODE_ENV": "production",
-        "MONGODB_URL": "mongodb+srv://bhagwatilalmenariyahawkscode:hH5YPr2cSEHeYvpH@tododata.f9o29fh.mongodb.net", 
-        "PORT": 4000 
+    "version": 2,
+    "builds": [
+      {
+        "src": "index.js",
+        "use": "@vercel/node",
+        "config": {
+          "includeFiles": ["dist/**"]
+        }
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "/index.js"
+      }
+    ],
+    "functions": {
+      "api/todo": {
+        "src": "index.js",
+        "handler": "/api/todo", 
+        "environment": {
+          "API_ROUTE": "/api/todo" 
+        }
       }
     }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/index.js"
-    }
-  ],
-  "functions": {
-    "api/todo": {
-      "src": "index.js",
-      "handler": "/api/todo", 
-      "environment": {
-        "API_ROUTE": "/api/todo" 
-      }
-    }
+ 
   }
-}
+ 
