@@ -1,10 +1,8 @@
-import User from "../Model/userModel.js";
 import TodoCollection from "../Model/TodoModel.js";
 import crypto from "crypto";
 
 const UnlockFully = async (req, res) => {
   try {
-    let ID = global.user_id;
     const providedPassKey = req.body.querystring.pass;
     const childid = req.body.querystring.childId;
 

@@ -3,7 +3,6 @@ import TodoCollection from "../Model/TodoModel.js";
 const ShowTable = async (req, res) => {
   // Get the authenticated user object
   try {
-    const empty = [];
     let data = await TodoCollection.find({ userID: global.user_id });
     if (!data) {
       return res

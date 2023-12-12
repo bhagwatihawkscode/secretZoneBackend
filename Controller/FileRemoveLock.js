@@ -3,7 +3,6 @@ import crypto from "crypto";
 
 const FileLockRemove = async (req, res) => {
   try {
-    let ID = global.user_id;
     const providedPassKey = req.body.querystring.pass;
     const childid = req.body.querystring.childId;
 

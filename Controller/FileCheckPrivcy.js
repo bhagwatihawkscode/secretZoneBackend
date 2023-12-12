@@ -2,8 +2,6 @@ import FileCollection from "../Model/FileModal.js";
 
 const PrivcyOkOrNot = async (req, res) => {
   try {
-    let ID = global.user_id;
-
     let childId = req.body.querystring;
 
     let userData = await FileCollection.findById(childId);

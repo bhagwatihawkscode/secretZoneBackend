@@ -1,8 +1,5 @@
 import TodoCollection from "../Model/TodoModel.js";
 import User from "../Model/userModel.js";
-import cheerio from "cheerio";
-import cloudinary from "cloudinary";
-import dotenv from "dotenv";
 
 // dotenv.config();
 

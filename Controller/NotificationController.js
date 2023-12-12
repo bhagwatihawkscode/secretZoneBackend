@@ -14,7 +14,7 @@ const NotificationData = async (req, res) => {
     //   expair: req.body.expaire,
     // };
     querystring.querystring.userId = global.user_id;
-    querystring.querystring.rowid = querystring.querystring.rowid;
+    // querystring.querystring.rowid = querystring.querystring.rowid;
     let data = new NotificationCollection(querystring.querystring);
 
     await data.save();

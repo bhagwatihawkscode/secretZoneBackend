@@ -1,8 +1,7 @@
 import FileCollection from "../Model/FileModal.js";
 import fs from "fs";
-import path from "path";
+
 import extract from "extract-zip";
-import url from "url";
 
 const DownloadZip = async (req, res) => {
   try {

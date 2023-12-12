@@ -16,15 +16,13 @@ const UpdateTodo = async (req, res) => {
         .status(404)
         .json({ success: false, message: "Secrects not found" });
     }
-    res
-      .status(200)
-      .json({
-        updatedUser,
-        success: true,
-        message: "Secrets update successful",
-      });
+    res.status(200).json({
+      updatedUser,
+      success: true,
+      message: "Secrets update successful",
+    });
   } catch {
-    console.error("Error uploading file:", error);
+    console.error("Error uploading file:");
     res.status(500).json({ message: "Internal server error" });
   }
 };

@@ -1,4 +1,3 @@
-import mime from "mime-types";
 import path from "path";
 import fs from "fs";
 import archiver from "archiver"; // Add this line to import the archiver library
@@ -40,15 +39,16 @@ const FileData = async (req, res) => {
 
     // Iterate over each file entry in files array
     for (const file of files) {
-      const { name, type, base64 } = file;
+      const { name, base64 } = file;
       if (!base64) {
         throw new Error("Invalid base64 data");
       }
+      /* eslint-disable no-useless-escape */
 
       let m = base64.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
-      let b = Buffer.from(m[2], "base64");
+      /* eslint-enable no-useless-escape */
 
-      const filePath = path.join(uploadPath, name);
+      let b = Buffer.from(m[2], "base64");
 
       // Add file to the zip archive
       archive.append(b, { name: name });

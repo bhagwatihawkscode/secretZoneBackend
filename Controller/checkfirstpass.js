@@ -1,10 +1,7 @@
-import User from "../Model/userModel.js";
 import TodoCollection from "../Model/TodoModel.js";
 
 const findPrivcyPass = async (req, res) => {
   try {
-    let ID = global.user_id;
-
     let childId = req.body.querystring;
 
     let userData = await TodoCollection.findById(childId);

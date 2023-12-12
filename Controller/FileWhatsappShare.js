@@ -1,8 +1,4 @@
 import FileCollection from "../Model/FileModal.js";
-import fs from "fs";
-import path from "path";
-import archiver from "archiver";
-import url from "url";
 
 const WhatsappShareZip = async (req, res) => {
   try {
@@ -12,7 +8,7 @@ const WhatsappShareZip = async (req, res) => {
     const files = await FileCollection.findById(senddataId);
 
     // Retrieve zip file information from the database
-    const { zipFilePath, FileName } = files;
+    const { FileName } = files;
 
     // Generate a link to the ZIP file
     const baseURL = "http://localhost:4000/";

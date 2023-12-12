@@ -2,7 +2,6 @@ import crypto from "crypto";
 import FileCollection from "../Model/FileModal.js";
 const filepassGenrate = async (req, res) => {
   try {
-    const ID = global.user_id;
     let childId = req.body;
 
     let password = childId.querystring.password;

@@ -1,6 +1,5 @@
 import FileCollection from "../Model/FileModal.js";
-import fs from "fs";
-import path from "path";
+
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 import User from "../Model/userModel.js";

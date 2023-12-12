@@ -1,6 +1,5 @@
 import FileCollection from "../Model/FileModal.js";
 import fs from "fs";
-import path from "path";
 
 const FileEditData = async (req, res) => {
   let data = req.body;

@@ -17,7 +17,12 @@ const uploadProfile = async (customPath, base64Image) => {
     const uniqueFilename = `${new Date().getTime()}.png`;
     const temporaryFilePath = `${temporaryStoragePath}${uniqueFilename}`;
 
+    /* eslint-disable no-useless-escape */
+
     let m = base64Image.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+
+    /* eslint-enable no-useless-escape */
+
     let b = Buffer.from(m[2], "base64");
 
     fs.writeFileSync(temporaryFilePath, b, "base64");

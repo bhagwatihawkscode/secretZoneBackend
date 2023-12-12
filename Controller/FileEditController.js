@@ -1,4 +1,3 @@
-import mime from "mime-types";
 import path from "path";
 import fs from "fs";
 import archiver from "archiver";
@@ -40,8 +39,11 @@ const FileUpdateData = async (req, res) => {
       if (!base64) {
         throw new Error("Invalid base64 data");
       }
+      /* eslint-disable no-useless-escape */
 
       let m = base64.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+      /* eslint-enable no-useless-escape */
+
       let b = Buffer.from(m[2], "base64");
 
       archive.append(b, { name: name });
@@ -50,7 +52,7 @@ const FileUpdateData = async (req, res) => {
     await archive.finalize();
 
     // Find the existing record based on some criteria, for example, title
-    const existingRecord = await FileCollection.findOneAndUpdate(
+    await FileCollection.findOneAndUpdate(
       { _id: id },
       {
         Title: title,

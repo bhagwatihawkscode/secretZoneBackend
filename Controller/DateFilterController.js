@@ -15,10 +15,10 @@ const filterAndSearch = async (req, res) => {
   let notificationId = user.notificationId;
 
   try {
-    const filter = { userID: userId };              
+    const filter = { userID: userId };
     if (rowId) {
       filter._id = rowId;
-      let rows = await TodoCollection.find({ _id: rowId });
+      // let rows = await TodoCollection.find({ _id: rowId });
 
       await NotificationCollection.updateOne(
         { _id: notificationId },

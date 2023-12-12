@@ -7,7 +7,6 @@ import dotenv from "dotenv";
 
 dotenv.config();
 const app = express();
-const PORT = 4000;
 
 const connectDB = async () => {
   try {
@@ -26,10 +25,9 @@ app.use(json());
 connectDB();
 app.use(
   cors({
-    origin: ["http://localhost:3000"],
+    origin: ["http://localhost:3000", "https://secret-zone.vercel.app"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
-    
   })
 );
 

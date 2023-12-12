@@ -3,7 +3,6 @@ import TodoCollection from "../Model/TodoModel.js";
 
 const passkeyupdate = async (req, res) => {
   try {
-    const ID = global.user_id;
     let childId = req.body;
 
     let password = childId.querystring.password;

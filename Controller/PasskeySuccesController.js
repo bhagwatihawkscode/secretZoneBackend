@@ -1,4 +1,3 @@
-import User from "../Model/userModel.js";
 import TodoCollection from "../Model/TodoModel.js";
 import crypto from "crypto";
 
@@ -6,7 +5,7 @@ const passverify = async (req, res) => {
   try {
     // User's ID
     // Provided password for verification
-    let ID = global.user_id;
+
     let childId = req.body;
 
     let password = childId.querystring.password;

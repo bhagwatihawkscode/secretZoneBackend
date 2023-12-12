@@ -5,7 +5,7 @@ const Filepassverify = async (req, res) => {
   try {
     // User's ID
     // Provided password for verification
-    let ID = global.user_id;
+
     let childId = req.body;
 
     let password = childId.querystring.password;
