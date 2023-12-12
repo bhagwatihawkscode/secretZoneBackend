@@ -4,9 +4,12 @@ const LocationFilter = async (req, res) => {
   try {
     const user = req.body;
     const query = user.query;
-
+    const userId = global.user_id;
     // Use $or to find documents where Location or Title matches the query
-    const filter = { Location: { $regex: new RegExp(query, "i") } };
+    const filter = {
+      Location: { $regex: new RegExp(query, "i") },
+      userID: userId,
+    };
 
     // Find documents that match the filter
     const data = await TodoCollection.find(filter);
