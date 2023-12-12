@@ -48,7 +48,7 @@ const sendmail = async (req, res) => {
     }
 
     // Generate a unique link with the updated document's data
-    const uniqueLink = `http://localhost:3000/Secretlist?${secret._id}`;
+    const uniqueLink = `${process.env.baseUrl}/${secret._id}`;
     let reciver = dataobj.email;
     let nameuser = await User.findById(global.user_id);
 

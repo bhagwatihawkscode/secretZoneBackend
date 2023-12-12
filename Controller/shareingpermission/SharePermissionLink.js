@@ -1,6 +1,8 @@
 import TodoCollection from "../../Model/TodoModel.js";
 import User from "../../Model/userModel.js";
+import dotenv from "dotenv";
 
+dotenv.config();
 const genratelinks = async (req, res) => {
   try {
     const obj = req.body;
@@ -28,7 +30,7 @@ const genratelinks = async (req, res) => {
     }
 
     // Generate a unique link with the updated document's data
-    const uniqueLink = `http://localhost:3000/Secretlist?${secret._id}`;
+    const uniqueLink = `${process.env.baseUrl}/${secret._id}`;
 
     // Send the unique link to the frontend
     res.json({ link: uniqueLink });

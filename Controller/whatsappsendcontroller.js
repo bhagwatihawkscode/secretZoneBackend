@@ -1,5 +1,8 @@
 import TodoCollection from "../Model/TodoModel.js";
 import User from "../Model/userModel.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 // dotenv.config();
 
@@ -66,7 +69,7 @@ const whatsappshare = async (req, res) => {
     }
 
     // Generate a unique link with the updated document's data
-    const uniqueLink = `http://localhost:3000/Secretlist?${secret._id}`;
+    const uniqueLink = `${process.env.baseUrl}/${secret._id}`;
     const text =
       `Hey! 🤫 I want to share a secret with you.%0A%0A` + `${uniqueLink}`;
 
