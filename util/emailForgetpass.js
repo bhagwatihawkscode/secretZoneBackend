@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
 });
 
 const sendPasswordResetEmail = (to, token) => {
-  const uniqueLink = ` http://localhost:3000/reset-password/${token} `;
+  const uniqueLink = `https://secret-zone.vercel.app/reset-password/${token} `;
   const mailOptions = {
     attachDataUrls: true,
     encoding: "base64",
