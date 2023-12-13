@@ -2,8 +2,10 @@ import User from "../../Model/userModel.js";
 
 const getAllUser = async (req, res) => {
   try {
-    // Fetch all users from the database
-    const users = await User.find({}, "_id name");
+    const excludeUserId = global.user_id; // Assuming globe.userid is the ID to exclude
+
+    // Fetch all users from the database excluding the specified user
+    const users = await User.find({ _id: { $ne: excludeUserId } }, "_id name");
 
     // Transform the data into the desired format
     const userOptions = users.map((user) => ({
