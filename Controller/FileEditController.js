@@ -1,5 +1,5 @@
 import archiver from "archiver";
-
+import { Storage } from "megajs";
 import FileCollection from "../Model/FileModal.js";
 
 const FileUpdateData = async (req, res) => {
