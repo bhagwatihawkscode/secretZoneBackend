@@ -18,13 +18,13 @@ const countUniqueLocationsByUserId = async (userId) => {
 const TotalAndTodayCount = async (req, res) => {
   try {
     const today = new Date();
-    today.setHours(0, 0, 0, 0); // Set the time to the start of the day
+    today.setHours(0, 0, 0, 0);
     const userId = global.user_id;
 
-    // Count of unique locations
+  
     const uniqueLocationsCount = await countUniqueLocationsByUserId(userId);
 
-    // Get counts for today
+  
     const todayCount =
       (await TodoCollection.countDocuments({
         createdAt: { $gte: today },

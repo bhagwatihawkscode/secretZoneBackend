@@ -8,16 +8,16 @@ const WhatsappShareZip = async (req, res) => {
     const files = await FileCollection.findById(senddataId);
 
     // Retrieve zip file information from the database
-    const { FileName } = files;
+    const { megaLink } = files;
 
     // Generate a link to the ZIP file
-    const baseURL = "http://localhost:4000/";
-    const zipFileLink = `${baseURL}uploadsFile/${FileName}`;
+    // const baseURL = "http://localhost:4000/";
+    // const zipFileLink = `${baseURL}uploadsFile/${FileName}`;
 
     // Generate the text for the WhatsApp message
     const text =
       `🔒 Hey! I want to share some secret files with you.%0A` +
-      `📁 Download your file: ${encodeURIComponent(zipFileLink)}`;
+      `📁 Download your file: ${encodeURIComponent(megaLink)}`;
 
     // Generate the WhatsApp API URL
     const whatsappUrl = isMobile

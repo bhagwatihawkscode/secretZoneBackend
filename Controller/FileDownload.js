@@ -1,50 +1,45 @@
-import FileCollection from "../Model/FileModal.js";
-import fs from "fs";
+import { File } from "megajs"; // Import the megajs package
 
-import extract from "extract-zip";
+import FileCollection from "../Model/FileModal.js";
 
 const DownloadZip = async (req, res) => {
   try {
     // Extract file ID from the request parameters
     const fileId = req.body.keyid;
 
-    // Retrieve zip file information from the database
-    const { zipFilePath, FileName } = await FileCollection.findById(fileId);
+    // Retrieve Mega link from the database
+    const { megaLink, FileName } = await FileCollection.findById(fileId);
 
-    // Use the /tmp directory for extraction
-    const extractPath = "/tmp/extracted";
+    // Download the Mega file
+    const megaFile = File.fromURL(megaLink);
 
-    // Ensure the /tmp/extracted directory exists
-    if (!fs.existsSync(extractPath)) {
-      fs.mkdirSync(extractPath, { recursive: true });
-    }
-
-    // Extract the contents of the ZIP file
-    await extract(zipFilePath, { dir: extractPath });
-
-    // Send the zip file to the client
-    res.setHeader("Content-Type", "application/zip");
-    res.setHeader("Content-Disposition", `attachment; filename="${FileName}"`);
-
-    res.download(zipFilePath, async (err) => {
+    megaFile.loadAttributes((err) => {
       if (err) {
-        console.error("Error during download:", err);
-      } else {
-        await cleanupExtractedFiles(extractPath);
+        console.error("Error loading Mega file attributes:", err);
+        res.status(500).send("Internal Server Error");
+        return;
       }
+
+      // Set response headers for the zip file
+      res.attachment(FileName);
+      res.setHeader("Content-Type", "application/zip");
+
+      // Pipe Mega file stream directly to the response stream
+      megaFile.download((err, data) => {
+        if (err) {
+          console.error("Error downloading Mega file:", err);
+          res.status(500).send("Internal Server Error");
+          return;
+        }
+
+        // Send the Mega file as a blob to the client
+        res.end(data);
+      });
     });
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");
   }
 };
-
-async function cleanupExtractedFiles(extractPath) {
-  try {
-    await fs.rmSync(extractPath, { recursive: true });
-  } catch (error) {
-    console.error("Error cleaning up extracted files:", error);
-  }
-}
 
 export default DownloadZip;

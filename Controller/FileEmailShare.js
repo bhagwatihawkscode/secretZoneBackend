@@ -1,8 +1,10 @@
 import FileCollection from "../Model/FileModal.js";
-
+import axios from "axios";
+import JSZip from "jszip";
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 import User from "../Model/userModel.js";
+
 dotenv.config();
 
 const MailShareZip = async (req, res) => {
@@ -16,8 +18,26 @@ const MailShareZip = async (req, res) => {
     const files = await FileCollection.findById(senddataId);
 
     // Use the existing zip file path and name from the database
-    const zipFilePath = files.zipFilePath;
+
     const FileName = files.FileName;
+    const megaLink = files.megaLink;
+
+    // Make a request to Mega to get the file content
+    // const megaFileResponse = await axios.get(megaLink, {
+    //   responseType: "arraybuffer",
+    // });
+
+    // // Check if the response data is empty or corrupted
+    // if (!megaFileResponse.data || megaFileResponse.data.byteLength === 0) {
+    //   throw new Error("Empty or corrupted Mega file");
+    // }
+
+    // // Create a ZIP archive using jszip
+    // const zip = new JSZip();
+    // zip.file(files.FileName, megaFileResponse.data);
+
+    // // Generate the ZIP file as a Buffer
+    // const zipBuffer = await zip.generateAsync({ type: "nodebuffer" });
 
     // Create reusable transporter object using the default SMTP transport
     const transporter = nodemailer.createTransport({
@@ -109,7 +129,8 @@ const MailShareZip = async (req, res) => {
     
       <div class="content">
       <h2>Title: ${files.Title}</h2>
-      <p>Content: Atteched With Mail </p>
+      <p>Content: ${FileName} </p>
+      <p>Download Link: <a href="${megaLink}">${megaLink}</a></p>
     </div>
           <footer>
           <p>Best regards,<br>Secret Zone Team</p>
@@ -117,12 +138,6 @@ const MailShareZip = async (req, res) => {
         </body>
       </html>
     `,
-      attachments: [
-        {
-          filename: FileName,
-          path: zipFilePath,
-        },
-      ],
     };
 
     // Send mail with defined transport object
