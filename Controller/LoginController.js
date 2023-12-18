@@ -15,7 +15,7 @@ async function logins({ body }, res) {
       // Password is correct
       const token = createSecretToken(user._id);
 
-      // Store the token in the user's database record
+      
       const splitToken = token.substring(token.indexOf("."), token.length);
 
       user.token = splitToken;

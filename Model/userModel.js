@@ -21,6 +21,7 @@ const UserSchema = mongoose.Schema({
   token: String,
   profileImage: String,
   PassKeyGen: String,
+  chatMessages: [{ type: String }],
   resetToken: String,
   resetTokenUsedAt: Date,
 });

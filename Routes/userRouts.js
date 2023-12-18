@@ -51,6 +51,10 @@ import {
   resetPassword,
 } from "../Controller/ForgetPassControoler.js";
 
+import {
+  saveMessage,
+  getInitialMessages,
+} from "../Controller/shareingpermission/messageModalCon.js";
 const app = Router();
 
 app.get("/", (req, res) => {
@@ -107,5 +111,5 @@ app.post("/generatelink", AuthVerifys, genratelinks);
 app.post("/sendrowdata/:id", AuthVerifys, senddatawithPermission);
 app.post("/alluserslist", AuthVerifys, getAllUser);
 app.post("/LocationFilter", AuthVerifys, LocationFilter);
-
+app.post("/getmessage", AuthVerifys, getInitialMessages);
 export default app;

@@ -1,4 +1,5 @@
 import User from "../Model/userModel.js";
+import { createSecretToken } from "../util/SecretToken.js";
 
 async function registers({ body }, res) {
   try {
@@ -22,27 +23,34 @@ async function registers({ body }, res) {
     // Save the user to the database
     await newUser.save();
 
-    // Store the token in the user's record
-    newUser.token = "";
-    newUser.profileImage = "";
+    // Create a token for the user
+    const token = createSecretToken(newUser._id);
+
+    // Extract a portion of the token if needed
+    const splitToken = token.substring(token.indexOf("."), token.length);
+
+    // Assign the token to the user
+    newUser.token = splitToken;
 
     // Save the user record with the token in the database
     await newUser.save();
 
-    // res.cookie("token", token, {
-    //   withCredentials: true,
-    //   httpOnly: false,
-    // });
+    // You can also set other properties like profileImage here
 
     return res
       .status(201)
-      .json({ success: true, message: "User registered successfully" });
+      .json({
+        success: true,
+        message: "User registered successfully",
+        token: splitToken,
+      });
   } catch (err) {
-    // Handle the error
+    // Handle the errorw
     console.error(err);
     return res
       .status(500)
       .json({ success: false, message: "Error registering the user" });
   }
 }
+
 export default registers;
